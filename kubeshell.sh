@@ -57,7 +57,7 @@ kubefork() {
         rm -f $KUBECONFIG
         unset KUBECONFIG
     fi
-    new_config=$(mktemp -p ~/.kube/)
+    new_config=$(mktemp)
     cp -rfp ~/.kube/config $new_config
     export KUBECONFIG="$new_config"
 }
