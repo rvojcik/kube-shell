@@ -14,7 +14,7 @@ kcon() {
 
     if [[ "$1" == "" ]]; then
         kubectl config get-contexts
-    elif [[ "$1" == "--" ]] ; then
+    elif [[ "$1" == "--" ]] || [[ "$1" == "-" ]]; then
         actual_context="$(kubectl config current-context)"
         kubectl config use-context "$__old_kube_context"
         export __old_kube_context="$actual_context"
@@ -41,7 +41,7 @@ kname() {
 
     if [[ "$1" == "" ]]; then
         kubectl get namespaces 
-    elif [[ "$1" == "--" ]] ; then
+    elif [[ "$1" == "--" ]] || [[ "$1" == "-" ]]; then
         actual_ns="$(kubectl config get-contexts | grep '^*' | grep -E -o '[A-Za-z0-9_-]+$')"
         kubectl config set-context --current --namespace "$__old_kube_ns"
         export __old_kube_ns="$actual_ns"
@@ -61,3 +61,4 @@ kubefork() {
     cp -rfp ~/.kube/config $new_config
     export KUBECONFIG="$new_config"
 }
+alias kfork=kubefork
