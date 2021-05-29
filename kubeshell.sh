@@ -61,3 +61,48 @@ kfork() {
     cp -rfp ~/.kube/config $new_config
     export KUBECONFIG="$new_config"
 }
+
+krun() {
+    if [ -z $_KUBE_CLUSTERS ] ; then
+        declare -g -a _KUBE_CLUSTERS
+    fi
+
+    if [[ "$1" == "+" ]] || [[ "$1" == "-" ]] ; then
+        if [[ "$2" == "" ]] ; then
+            echo "You have to specify kubernetes context" >&2
+            return 1
+        elif ! echo -e "ALL\n$(kubectl config get-contexts -o name)" | egrep -q "^${2}$" ; then
+            echo "Error: Context $2 not exists" >&2
+            return 1
+        else
+            if [[ "$1" == "+" ]] ; then
+                if [[ "$2" == "ALL" ]] ; then
+                    _KUBE_CLUSTERS=($(kubectl config get-contexts -o name))
+                    return 0
+                else
+                    _KUBE_CLUSTERS+=("$2")
+                    return 0
+                fi
+            else
+                if [[ "$2" == "ALL" ]] ; then
+                    _KUBE_CLUSTERS=()
+                    return 0
+                else
+                    _KUBE_CLUSTERS=("${_KUBE_CLUSTERS[@]/$2}")
+                    return 0
+                fi
+            fi
+        fi
+    elif [[ "$1" == "" ]] ; then
+        echo "Contexts:"
+        printf "  %s\n" "${_KUBE_CLUSTERS[@]}"
+    else
+        #
+        # Execute command on contexts
+        #
+        for _context in ${_KUBE_CLUSTERS[@]} ; do
+            kubectl config use-context $_context &> /dev/null
+            kubectl $* | sed "s/^/$_context| /"
+        done
+    fi
+}
