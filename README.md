@@ -1,6 +1,10 @@
 # kube-shell
 
-Kubernetes shell bash function to help working with kubernetes.
+Kubernetes shell bash functions to help working with multiple kubernetes clusters.
+
+- switch between namespaces easily
+- switch easily between clusters
+- fork kubeconfig to work with multiple clusters / namespaces in separate shells
 
 ## Demo
 
