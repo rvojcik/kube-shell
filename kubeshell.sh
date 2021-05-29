@@ -52,7 +52,7 @@ kname() {
 }
 complete -F __kname_complete kname
 
-kubefork() {
+kfork() {
     if [[ "$1" == "del" ]] ; then
         rm -f $KUBECONFIG
         unset KUBECONFIG
@@ -61,4 +61,3 @@ kubefork() {
     cp -rfp ~/.kube/config $new_config
     export KUBECONFIG="$new_config"
 }
-alias kfork=kubefork
