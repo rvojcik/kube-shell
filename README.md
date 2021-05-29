@@ -27,7 +27,7 @@ Sometimes it's handy to have two contexts in two shells
 
 Great for cluster operators, check your deployments across infrastructure or deploy changes to multiple contexts.
 
-![demo4](./img/multiple-contexts "Demo working on multiple contexts")
+![demo4](./img/multiple-contexts.gif "Demo working on multiple contexts")
 
 ## Installation
 
