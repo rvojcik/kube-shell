@@ -9,7 +9,25 @@ Kubernetes shell bash functions to help working with multiple kubernetes cluster
 
 ## Demo
 
-![demo](./img/kube.gif "Demo Kubeshell")
+### Switching between contexts
+
+![demo1](./img/contexts.gif "Demo Context Switch")
+
+### Switching between default namespaces
+
+![demo2](./img/namespaces.gif "Demo Namespace Switch")
+
+### Forking Kube Config in separate shell
+
+Sometimes it's handy to have two contexts in two shells
+
+![demo3](./img/forking.gif "Demo Forking Kube Config")
+
+### Working on multiple contexts at once
+
+Great for cluster operators, check your deployments across infrastructure or deploy changes to multiple contexts.
+
+![demo4](./img/multiple-contexts "Demo working on multiple contexts")
 
 ## Installation
 
