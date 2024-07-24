@@ -88,7 +88,7 @@ krun() {
                     _KUBE_CLUSTERS=()
                     return 0
                 else
-                    _KUBE_CLUSTERS=("${_KUBE_CLUSTERS[@]/$2}")
+                    _KUBE_CLUSTERS=(${_KUBE_CLUSTERS[@]/$2})
                     return 0
                 fi
             fi
@@ -96,13 +96,21 @@ krun() {
     elif [[ "$1" == "" ]] ; then
         echo "Contexts:"
         printf "  %s\n" "${_KUBE_CLUSTERS[@]}"
+        echo ""
+        echo "Help:"
+        echo " krun + ALL         - add all production clusters"
+        echo "        <context>   - any kubectl context"
+        echo ""
+        echo " krun - ALL         - remove all contexts from list"
+        echo "        <context>   - any kubectl context"
     else
         #
         # Execute command on contexts
         #
         for _context in ${_KUBE_CLUSTERS[@]} ; do
-            kubectl config use-context $_context &> /dev/null
-            kubectl $* | sed "s/^/$_context| /"
+            echo -e "${_HYELOW}Cluster: ${_HAZURE}$_context${_NOC}" >&2
+            kubectl --context $_context $*
         done
     fi
 }
+
