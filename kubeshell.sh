@@ -88,7 +88,12 @@ krun() {
                     _KUBE_CLUSTERS=()
                     return 0
                 else
-                    _KUBE_CLUSTERS=(${_KUBE_CLUSTERS[@]/$2})
+                    for i in ${!_KUBE_CLUSTERS[@]} ; do
+                        if [[ "${_KUBE_CLUSTERS[$i]}" == "$2" ]] ; then
+                            echo "Removing context ${_KUBE_CLUSTERS[$i]} from list" >&2
+                            unset "_KUBE_CLUSTERS[$i]"
+                        fi
+                    done
                     return 0
                 fi
             fi
